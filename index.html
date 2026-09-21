@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <meta name="To-Do List" content="todo list application to make users daily tasks tracking easy">
+</head>
+<body>
+    <header>
+        <h1 class="text-2xl text-center font-bold text-blue-500 mt-2 md:text-3xl sm:text-3xl">
+            My To-Do List
+        </h1>
+        <p class="text-xl text-center text-gray-600 mt-3 md:text-2xl sm:text-3xl" >
+            Stay focused & Organized
+        </p>
+    </header>
+    <main class="p-2 mt-5">
+        <section class="flex flex-col sm:flex-row justify-center items-center gap-2">
+            <input id="taskInput" type="text" placeholder="Enter your task here"
+            class="border border-gray-300 px-4 py-2 rounded-lg outline-none focus:border-2 focus:border-blue-500" 
+            />
+            <button id="addBtn" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg active:bg-gray-300 active:text-black">Add Task</button>
+        </section>
+        <section>
+            <ul id="taskList" class="mt-5 p-2 flex justify-center items-center">
+            </ul>
+        </section>
+    </main>
+    <script src="app.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>
