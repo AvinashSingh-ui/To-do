@@ -38,7 +38,7 @@ const editTask = (li) => {
                  completeBtn.textContent = "Mark Done";
 
                 completeBtn.className =
-                    "complete-btn ml-2 px-2 py-2 bg-green-500 text-white rounded";
+                    "complete-btn ml-2 p-2 bg-green-500 text-white rounded";
 
                 completeBtn.addEventListener("click", () => {
                     li.classList.add("line-through");
@@ -72,7 +72,7 @@ const addTask = () => {
 
     completeBtn.textContent = "Mark Done";
 
-    completeBtn.className = "complete-btn ml-2 px-2 py-1 bg-green-500 text-white rounded";
+    completeBtn.className = "complete-btn ml-2 p-2 bg-green-500 text-white rounded";
 
     completeBtn.addEventListener("click", () => {
         li.classList.add("line-through");
