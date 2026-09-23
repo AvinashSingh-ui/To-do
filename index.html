@@ -1,33 +1,405 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List App</title>
-    <meta name="To-Do List" content="todo list application to make users daily tasks tracking easy">
+
+    <title>TaskFlow — Smart To-Do List</title>
+   
+
+    <meta
+        name="description"
+        content="A simple and focused task management application."
+    >
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
+
 <body>
-    <header>
-        <h1 class="text-2xl text-center font-bold text-blue-500 mt-2 md:text-3xl sm:text-3xl">
-            My To-Do List
-        </h1>
-        <p class="text-xl text-center text-gray-600 mt-3 md:text-2xl sm:text-3xl" >
-            Stay focused & Organized
-        </p>
-    </header>
-    <main class="p-2 mt-5">
-        <section class="flex flex-col sm:flex-row justify-center items-center gap-2">
-            <input id="taskInput" type="text" placeholder="Enter your task here"
-            class="border border-gray-300 px-4 py-2 rounded-lg outline-none focus:border-2 focus:border-blue-500" 
-            />
-            <button id="addBtn" type="button" class="bg-blue-600 text-white px-4 py-2 rounded-lg active:bg-gray-300 active:text-black">Add Task</button>
+
+    <main class="app">
+
+        <!-- Header -->
+        <header class="app-header">
+
+            <div>
+                <p class="eyebrow">PERSONAL PRODUCTIVITY</p>
+
+                <h1>TaskFlow</h1>
+
+                <p class="subtitle">
+                    Stay focused & organized.
+                </p>
+            </div>
+
+            <div class="header-actions">
+
+                <button
+                    id="themeToggle"
+                    class="theme-toggle"
+                    type="button"
+                    aria-label="Toggle dark mode"
+                    title="Toggle theme"
+                >
+                   <i class="fa-regular fa-sun"></i> 
+                </button>
+
+                <button
+                    id="shortcutBtn"
+                    class="shortcut-btn"
+                    type="button"
+                    aria-label="Show keyboard shortcuts"
+                >
+                    ?
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- Progress -->
+        <section
+            class="progress-section"
+            aria-label="Task progress"
+        >
+
+            <div class="progress-header">
+
+                <div>
+                    <span class="section-label">
+                        Progress
+                    </span>
+
+                    <span
+                        id="progressStats"
+                        class="progress-stats"
+                    >
+                        <strong>0</strong> of 0 done
+                    </span>
+                </div>
+
+                <span id="progressPercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress-track">
+
+                <div
+                    id="progressFill"
+                    class="progress-fill"
+                    role="progressbar"
+                    aria-valuenow="0"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                ></div>
+
+            </div>
+
         </section>
-        <section>
-            <ul id="taskList" class="mt-5 p-2 flex justify-center items-center">
-            </ul>
+
+
+        <!-- Add Task -->
+        <form
+            id="addTaskForm"
+            class="add-task-form"
+            autocomplete="off"
+        >
+
+            <div class="form-main">
+
+                <input
+                    id="taskInput"
+                    class="task-input"
+                    type="text"
+                    placeholder="What needs to be done?"
+                    maxlength="200"
+                    aria-label="New task"
+                    required
+                >
+
+                <button
+                    id="addBtn"
+                    class="add-btn"
+                    type="submit"
+                >
+                    <span>+</span>
+                    Add task
+                </button>
+
+            </div>
+
+
+            <div class="form-options">
+
+                <label class="field">
+
+                    <span>Priority</span>
+
+                    <select
+                        id="prioritySelect"
+                        class="select-input"
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium" selected>
+                            Medium
+                        </option>
+                        <option value="high">
+                            High
+                        </option>
+                    </select>
+
+                </label>
+
+
+                <label class="field">
+
+                    <span>Due date</span>
+
+                    <input
+                        id="dueDateInput"
+                        class="date-input"
+                        type="date"
+                        aria-label="Due date"
+                    >
+
+                </label>
+
+            </div>
+
+        </form>
+
+
+        <!-- Toolbar -->
+        <section class="toolbar">
+
+            <div
+                class="filter-group"
+                role="tablist"
+                aria-label="Filter tasks"
+            >
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                >
+                    All
+                    <span id="countAll">0</span>
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="active"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    Active
+                    <span id="countActive">0</span>
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="completed"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    Done
+                    <span id="countCompleted">0</span>
+                </button>
+
+            </div>
+
+
+            <div class="search-wrapper">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    id="searchInput"
+                    class="search-input"
+                    type="search"
+                    placeholder="Search tasks..."
+                    aria-label="Search tasks"
+                >
+
+                <kbd>/</kbd>
+
+            </div>
+
         </section>
+
+
+        <!-- Loading Skeleton -->
+        <section
+            id="skeletonLoader"
+            class="skeleton-list"
+            aria-label="Loading tasks"
+        >
+
+            <div class="skeleton-item">
+                <div class="skeleton-circle"></div>
+
+                <div class="skeleton-content">
+                    <div class="skeleton-line long"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+
+            <div class="skeleton-item">
+                <div class="skeleton-circle"></div>
+
+                <div class="skeleton-content">
+                    <div class="skeleton-line long"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+
+            <div class="skeleton-item">
+                <div class="skeleton-circle"></div>
+
+                <div class="skeleton-content">
+                    <div class="skeleton-line long"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Task List -->
+        <ul
+            id="taskList"
+            class="task-list"
+            aria-label="Task list"
+        ></ul>
+
+
+        <!-- Empty State -->
+        <section
+            id="emptyState"
+            class="empty-state"
+            hidden
+        >
+
+            <div class="empty-icon">
+                ✓
+            </div>
+
+            <h2 id="emptyTitle">
+                Nothing here yet
+            </h2>
+
+            <p id="emptySubtitle">
+                Add your first task and start making progress.
+            </p>
+
+        </section>
+
     </main>
+
+
+    <!-- Toast -->
+    <div
+        id="toastContainer"
+        class="toast-container"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- Keyboard Shortcuts -->
+    <div
+        id="shortcutsModal"
+        class="modal-overlay"
+        hidden
+    >
+
+        <div
+            class="modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shortcutTitle"
+        >
+
+            <div class="modal-header">
+
+                <h2 id="shortcutTitle">
+                    Keyboard shortcuts
+                </h2>
+
+                <button
+                    id="closeModal"
+                    class="modal-close"
+                    type="button"
+                    aria-label="Close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="shortcut-list">
+
+                <div class="shortcut-row">
+                    <span>Add task</span>
+                    <kbd>N</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Search</span>
+                    <kbd>/</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Toggle theme</span>
+                    <kbd>T</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Show shortcuts</span>
+                    <kbd>?</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Close / Cancel</span>
+                    <kbd>Esc</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>All tasks</span>
+                    <kbd>1</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Active tasks</span>
+                    <kbd>2</kbd>
+                </div>
+
+                <div class="shortcut-row">
+                    <span>Completed tasks</span>
+                    <kbd>3</kbd>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
     <script src="app.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+
 </body>
+
 </html>
